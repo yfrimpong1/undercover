@@ -202,15 +202,15 @@ The skeleton's health page goes, and its end-to-end test becomes a test of the q
 
 **Why now:** the queue is the handlers' home page. The brand, the API client and the polling built here are what the claim page in Phase 5 is made from.
 
-- [ ] The queue page lists the 25 claims. Each row shows its id (in JetBrains Mono), the customer, the type, the submitted date, the amount claimed and a status badge, plus the decision, the payout and whether it's paid once decided.
-- [ ] Counts at the top show how many claims are in each of the four statuses
-- [ ] Each row links to `/claims/<id>`
-- [ ] With the queue open, `curl -X POST localhost:8000/api/claims/CLM-1002/start` turns that row to In progress within 3 seconds, with no reload
-- [ ] The instructions page shows the text of `backend/instructions.md`, with nothing to edit
-- [ ] With the backend stopped, the page says `The backend isn't reachable.`, and it recovers by itself when the backend is back
-- [ ] Vitest covers the queue, the instructions page, the polling and the formatting. `npm run check:ts` passes, with coverage at 80% or more.
-- [ ] `npm run e2e` passes with the queue test in place of the health test
-- [ ] In the browser, with the Playwright MCP server, the queue and the instructions page at `http://localhost:5173` match the brand in both modes. Light mode has a `#F0F4F5` page with white panels, and dark mode has a `#04232E` page with black panels. Both use the brand fonts and rounded panels with no outline, with no border on one edge of a panel and no line across the top of the page.
+- [x] The queue page lists the 25 claims. Each row shows its id (in JetBrains Mono), the customer, the type, the submitted date, the amount claimed and a status badge, plus the decision, the payout and whether it's paid once decided.
+- [x] Counts at the top show how many claims are in each of the four statuses
+- [x] Each row links to `/claims/<id>`
+- [x] With the queue open, `curl -X POST localhost:8000/api/claims/CLM-1002/start` turns that row to In progress within 3 seconds, with no reload
+- [x] The instructions page shows the text of `backend/instructions.md`, with nothing to edit
+- [x] With the backend stopped, the page says `The backend isn't reachable.`, and it recovers by itself when the backend is back
+- [x] Vitest covers the queue, the instructions page, the polling and the formatting. `npm run check:ts` passes, with coverage at 80% or more.
+- [x] `npm run e2e` passes with the queue test in place of the health test
+- [x] In the browser, with the Playwright MCP server, the queue and the instructions page at `http://localhost:5173` match the brand in both modes. Light mode has a `#F0F4F5` page with white panels, and dark mode has a `#04232E` page with black panels. Both use the brand fonts and rounded panels with no outline, with no border on one edge of a panel and no line across the top of the page.
 
 ## Phase 5: the claim page, live steps and sign-off
 

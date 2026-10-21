@@ -1,19 +1,31 @@
-import { useEffect, useState } from "react";
+import { InstructionsPage } from "./InstructionsPage";
+import { QueuePage } from "./QueuePage";
 
-export function App() {
-  const [status, setStatus] = useState("checking");
+function Page({ path }: Readonly<{ path: string }>) {
+  if (path === "/instructions") return <InstructionsPage />;
+  return <QueuePage />;
+}
 
-  useEffect(() => {
-    void fetch("/api/health")
-      .then((response) => (response.ok ? "up" : "down"))
-      .catch(() => "down")
-      .then(setStatus);
-  }, []);
-
+export function App({ path }: Readonly<{ path: string }>) {
+  const current = (href: string) => (path === href ? "page" : undefined);
   return (
-    <main>
-      <h1>UnderCover</h1>
-      <p>Backend: {status}</p>
-    </main>
+    <>
+      <header className="site-header">
+        <a className="brand" href="/">
+          UnderCover <span className="tagline">Claims</span>
+        </a>
+        <nav aria-label="Main">
+          <a href="/" aria-current={current("/")}>
+            Claims
+          </a>
+          <a href="/instructions" aria-current={current("/instructions")}>
+            Agent instructions
+          </a>
+        </nav>
+      </header>
+      <main>
+        <Page path={path} />
+      </main>
+    </>
   );
 }
