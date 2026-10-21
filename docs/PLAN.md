@@ -140,8 +140,9 @@ You are the UnderCover Agent. You decide travel insurance claims for UnderCover
 Travel Insurance the way one of its claims handlers would, by the policy
 wording alone.
 
-For the claim you're given, read the claim, the customer's policy, their claim
-history and the policy wording. Then decide:
+For the claim you're given, read the claim first: it names the customer's
+policy and the customer. Then read the policy, the customer's claim history
+and the policy wording, and decide:
 
 - Approve when the wording covers the loss and the claim meets its conditions.
   Work out the payout item by item as section 10 describes, using the plan's
@@ -172,19 +173,19 @@ Amounts are in US dollars, written like $1,250.00.
 
 **Why this way:** the agent holds no business rules and no data. It reads and acts through the same API as the dashboard, as the tech stack asks. Recording steps from the stream keeps this first agent small. I checked that `create_agent` streams one `model` update per model turn and one `tools` update per tool result, which are exactly the steps the dashboard shows.
 
-- [ ] Tests with a stub model run the agent against the backend in-process:
-  - [ ] `CLM-1001`: the four reads, approve for $420.00 and pay. The claim ends `decided` and paid, with its steps recorded in order.
-  - [ ] An approval for $1,500.00 where the stub then tries to pay anyway: the tool returns the 403 message to the model, the run finishes, and the claim is `waiting_for_sign_off` with no payment
-  - [ ] A decline and a referral: both `decided`, neither paid
-  - [ ] The system prompt is the text from `GET /api/instructions`
-  - [ ] `decide_claim` and `pay_claim` have no claim id input and act on the run's claim
-  - [ ] A run that ends without a decision leaves the claim `in_progress`, and the command line says `CLM-1001 ended without a decision.`
-  - [ ] `uv run -m agent` works only the waiting and in-progress claims, in order
-  - [ ] `uv run -m agent CLM-1001` on a decided claim prints `CLM-1001 is already decided.` and stops
-- [ ] `grep -rnE "sqlite3|data/|from backend|import backend" agent --include=*.py --exclude-dir=tests` finds nothing, because the agent reaches everything through the API
-- [ ] Live, with the real model and `npm run dev` running: `uv run -m agent CLM-1001` prints its line, and `GET /api/claims/CLM-1001` shows a decision with a two or three sentence reason and a section. If it's an approval of $1,000.00 or less, it's paid.
-- [ ] Live: `uv run -m agent CLM-1003` ($3,800.00 of emergency medical). If the agent approves over $1,000.00, the claim is `waiting_for_sign_off` with no payment, and any attempt to pay shows in its steps as refused.
-- [ ] `npm run check:python` passes, with coverage at 80% or more
+- [x] Tests with a stub model run the agent against the backend in-process:
+  - [x] `CLM-1001`: the four reads, approve for $420.00 and pay. The claim ends `decided` and paid, with its steps recorded in order.
+  - [x] An approval for $1,500.00 where the stub then tries to pay anyway: the tool returns the 403 message to the model, the run finishes, and the claim is `waiting_for_sign_off` with no payment
+  - [x] A decline and a referral: both `decided`, neither paid
+  - [x] The system prompt is the text from `GET /api/instructions`
+  - [x] `decide_claim` and `pay_claim` have no claim id input and act on the run's claim
+  - [x] A run that ends without a decision leaves the claim `in_progress`, and the command line says `CLM-1001 ended without a decision.`
+  - [x] `uv run -m agent` works only the waiting and in-progress claims, in order
+  - [x] `uv run -m agent CLM-1001` on a decided claim prints `CLM-1001 is already decided.` and stops
+- [x] `grep -rnE "sqlite3|data/|^(from|import) backend" agent --include=*.py --exclude-dir=tests` finds nothing, because the agent reaches everything through the API. (Anchored to the start of a line, because `from agent.main import backend` imports the agent's own HTTP client.)
+- [x] Live, with the real model and `npm run dev` running: `uv run -m agent CLM-1001` prints its line, and `GET /api/claims/CLM-1001` shows a decision with a two or three sentence reason and a section. If it's an approval of $1,000.00 or less, it's paid.
+- [x] Live: `uv run -m agent CLM-1003` ($3,800.00 of emergency medical). If the agent approves over $1,000.00, the claim is `waiting_for_sign_off` with no payment, and any attempt to pay shows in its steps as refused.
+- [x] `npm run check:python` passes, with coverage at 80% or more
 
 ## Phase 4: the dashboard's brand, queue and instructions
 
