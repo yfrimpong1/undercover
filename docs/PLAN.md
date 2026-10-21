@@ -118,18 +118,18 @@ The documents leave these calls to me. Tell me if you want any of them changed b
 
 Each criterion is a pytest test, and I'll also check the main ones with `curl` against a freshly seeded dev backend:
 
-- [ ] `GET /api/instructions` returns the text of `backend/instructions.md`
-- [ ] `start_claim` on `CLM-1001` sets it to `in_progress`. Starting it again clears its steps. Starting a decided claim, or one waiting for sign-off, returns 409.
-- [ ] `record_step` stores steps and `list_steps` returns them in order. An unknown kind returns 422. Recording on a waiting claim returns 409. Recording on a decided claim works, because the agent's last message comes after its decision.
-- [ ] `decide_claim` on a claim that hasn't been started returns 409
-- [ ] Approving `CLM-1001` for $420.00 under section 3 sets it to `decided`, and `get_claim` shows the section as `3. Trip Delay` with its wording. Deciding it again returns 409.
-- [ ] Each of these returns 422: a decline or a referral with a payout other than $0.00, a payout above the amount claimed, a negative amount, an amount with three decimal places, and section 13
-- [ ] `pay_claim` for $420.00 records the payment. Paying again returns 409. Paying a different amount returns 409. Paying a declined, referred or undecided claim returns 409.
-- [ ] Approving a claim for $1,500.00 sets it to `waiting_for_sign_off`. Then `pay_claim` for $1,500.00 returns 403 with `A payout over $1,000.00 needs a handler's sign-off`, and the claim still has no payment.
-- [ ] Approving a claim for exactly $1,000.00 sets it to `decided`, and it can be paid
-- [ ] `sign_off_claim` by `HND-01` sets the claim to `decided` and records both the sign-off and a $1,500.00 payment. Signing off again returns 409. Signing off a claim that isn't waiting for sign-off returns 409. An unknown handler returns 404, and a handler without `can_approve_over_limit` returns 403.
-- [ ] `GET /api/claims` shows each claim's decision, payout and whether it's paid
-- [ ] `npm run check:python` passes, with coverage at 80% or more
+- [x] `GET /api/instructions` returns the text of `backend/instructions.md`
+- [x] `start_claim` on `CLM-1001` sets it to `in_progress`. Starting it again clears its steps. Starting a decided claim, or one waiting for sign-off, returns 409.
+- [x] `record_step` stores steps and `list_steps` returns them in order. An unknown kind returns 422. Recording on a waiting claim returns 409. Recording on a decided claim works, because the agent's last message comes after its decision.
+- [x] `decide_claim` on a claim that hasn't been started returns 409
+- [x] Approving `CLM-1001` for $420.00 under section 3 sets it to `decided`, and `get_claim` shows the section as `3. Trip Delay` with its wording. Deciding it again returns 409.
+- [x] Each of these returns 422: a decline or a referral with a payout other than $0.00, a payout above the amount claimed, a negative amount, an amount with three decimal places, and section 13
+- [x] `pay_claim` for $420.00 records the payment. Paying again returns 409. Paying a different amount returns 409. Paying a declined, referred or undecided claim returns 409.
+- [x] Approving a claim for $1,500.00 sets it to `waiting_for_sign_off`. Then `pay_claim` for $1,500.00 returns 403 with `A payout over $1,000.00 needs a handler's sign-off`, and the claim still has no payment.
+- [x] Approving a claim for exactly $1,000.00 sets it to `decided`, and it can be paid
+- [x] `sign_off_claim` by `HND-01` sets the claim to `decided` and records both the sign-off and a $1,500.00 payment. Signing off again returns 409. Signing off a claim that isn't waiting for sign-off returns 409. An unknown handler returns 404, and a handler without `can_approve_over_limit` returns 403.
+- [x] `GET /api/claims` shows each claim's decision, payout and whether it's paid
+- [x] `npm run check:python` passes, with coverage at 80% or more
 
 ### Draft instructions for the agent
 

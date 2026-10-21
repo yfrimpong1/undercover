@@ -1,8 +1,9 @@
 """The shapes of what the API takes and returns."""
 
-from typing import Literal
+from decimal import Decimal
+from typing import Annotated, Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 Status = Literal["waiting", "in_progress", "waiting_for_sign_off", "decided"]
 DecisionKind = Literal["approve", "decline", "refer"]
@@ -157,3 +158,32 @@ class PolicyWording(BaseModel):
 
 class Instructions(BaseModel):
     text: str
+
+
+Amount = Annotated[Decimal, Field(ge=0, decimal_places=2)]
+
+
+class StepIn(BaseModel):
+    kind: Literal["message", "tool_call", "tool_result"]
+    name: str
+    content: str
+
+
+class Step(StepIn):
+    step_id: int
+    created_at: str
+
+
+class DecisionIn(BaseModel):
+    decision: DecisionKind
+    payout: Amount
+    reason: Annotated[str, Field(min_length=1)]
+    policy_section: int
+
+
+class PaymentIn(BaseModel):
+    amount: Amount
+
+
+class SignOffIn(BaseModel):
+    handler_id: str

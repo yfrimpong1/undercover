@@ -1,11 +1,21 @@
 """The operations that read UnderCover's records."""
 
 import sqlite3
+from pathlib import Path
 
 from fastapi import APIRouter
 
 from backend.db import Db, get_record, list_records
-from backend.models import Customer, Handler, Policy, PolicyWording, PreviousClaim
+from backend.models import (
+    Customer,
+    Handler,
+    Instructions,
+    Policy,
+    PolicyWording,
+    PreviousClaim,
+)
+
+INSTRUCTIONS = Path(__file__).parent / "instructions.md"
 
 router = APIRouter(prefix="/api")
 
@@ -56,3 +66,9 @@ def get_policy_wording(db: Db) -> PolicyWording:
 def list_handlers(db: Db) -> list[Handler]:
     """List the claims handlers."""
     return [Handler.model_validate(h) for h in list_records(db, "handler")]
+
+
+@router.get("/instructions", operation_id="get_instructions")
+def get_instructions() -> Instructions:
+    """Get the UnderCover Agent's instructions."""
+    return Instructions(text=INSTRUCTIONS.read_text(encoding="utf-8"))
