@@ -173,3 +173,10 @@ def test_model_name(monkeypatch):
     assert main.model().model_name == "openai/gpt-6-luna"
     monkeypatch.setenv("MODEL_NAME", "openrouter/free")
     assert main.model().model_name == "openrouter/free"
+
+
+def test_steps_keep_characters_as_written():
+    message = AIMessage(
+        content="", tool_calls=[call("decide_claim", reason="The plan’s limit")]
+    )
+    assert main.steps(message)[0]["content"] == '{"reason": "The plan’s limit"}'

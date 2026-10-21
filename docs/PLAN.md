@@ -225,14 +225,14 @@ The skeleton's health page goes, and its end-to-end test becomes a test of the q
 
 **Why this way:** this page is where a handler checks the agent's work, so it puts the decision and the clause it rests on next to the evidence. Signing off is the one thing a handler does here, and the backend checks it whatever the page sends.
 
-- [ ] `/claims/CLM-1001` shows the story, the 3 items, the 4 documents, the Premium policy for the Rome trip and Maya Patel's earlier claim `CLM-0412`
-- [ ] Before a decision, the decision panel says `The agent hasn't decided this claim yet.`
-- [ ] After a decision set through the API, it shows the decision badge, the payout, the reason and `3. Trip Delay`, whose wording opens on a click. The payment line reads `Not paid yet` before payment and `Paid $420.00 on <date>` after.
-- [ ] A claim put into `waiting_for_sign_off` through the API shows the handler choice and the sign-off button. Choosing Dana Whitfield and signing off turns the page to Decided with `Paid $1,500.00, signed off by Dana Whitfield on <date>`.
-- [ ] Steps recorded through the API appear on the page without a reload
-- [ ] `/claims/CLM-9999` says `Claim CLM-9999 not found.`
-- [ ] Vitest covers each state of the decision panel, the sign-off and the steps. `npm run check:ts` passes, with coverage at 80% or more.
-- [ ] In the browser, with the Playwright MCP server: `/claims/CLM-1004` is open while `uv run -m agent CLM-1004` runs live, and the steps arrive one by one, then the decision. The page reads well in light and dark mode.
+- [x] `/claims/CLM-1001` shows the story, the 3 items, the 4 documents, the Premium policy for the Rome trip and Maya Patel's earlier claim `CLM-0412`
+- [x] Before a decision, the decision panel says `The agent hasn't decided this claim yet.`
+- [x] After a decision set through the API, it shows the decision badge, the payout, the reason and `3. Trip Delay`, whose wording opens on a click. The payment line reads `Not paid yet` before payment and `Paid $420.00 on <date>` after.
+- [x] A claim put into `waiting_for_sign_off` through the API shows the handler choice and the sign-off button. Choosing Dana Whitfield and signing off turns the page to Decided with `Paid $1,500.00, signed off by Dana Whitfield on <date>`. (Checked on `CLM-1010` for $1,200.00, since it claims $1,350.00 and the backend refuses a payout above the amount claimed.)
+- [x] Steps recorded through the API appear on the page without a reload
+- [x] `/claims/CLM-9999` says `Claim CLM-9999 not found.`
+- [x] Vitest covers each state of the decision panel, the sign-off and the steps. `npm run check:ts` passes, with coverage at 80% or more.
+- [x] In the browser, with the Playwright MCP server: `/claims/CLM-1004` is open while `uv run -m agent CLM-1004` runs live, and the steps arrive one by one, then the decision. The page reads well in light and dark mode.
 
 ## Phase 6: end-to-end tests and a run over the queue
 

@@ -1,8 +1,11 @@
+import { ClaimPage } from "./ClaimPage";
 import { InstructionsPage } from "./InstructionsPage";
 import { QueuePage } from "./QueuePage";
 
 function Page({ path }: Readonly<{ path: string }>) {
   if (path === "/instructions") return <InstructionsPage />;
+  const claim = /^\/claims\/([^/]+)$/.exec(path);
+  if (claim) return <ClaimPage claimId={decodeURIComponent(claim[1])} />;
   return <QueuePage />;
 }
 

@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
 import { App } from "./App";
-import { mockApi } from "./testing";
+import { claim, claimRoutes, mockApi } from "./testing";
 
 afterEach(() => {
   cleanup();
@@ -30,4 +30,12 @@ it("shows the instructions at /instructions", async () => {
       .getByRole("link", { name: "Agent instructions" })
       .getAttribute("aria-current"),
   ).toBe("page");
+});
+
+it("shows a claim at /claims/<id>", async () => {
+  mockApi(claimRoutes(claim()));
+  render(<App path="/claims/CLM-1001" />);
+  expect(
+    await screen.findByText("Flight home canceled by the airline"),
+  ).toBeDefined();
 });

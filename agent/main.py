@@ -129,7 +129,7 @@ def steps(message: BaseMessage) -> list[dict[str, str]]:
             {
                 "kind": "tool_call",
                 "name": call["name"],
-                "content": json.dumps(call["args"]),
+                "content": json.dumps(call["args"], ensure_ascii=False),
             }
             for call in message.tool_calls
         ]
