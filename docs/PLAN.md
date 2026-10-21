@@ -244,18 +244,18 @@ The skeleton's health page goes, and its end-to-end test becomes a test of the q
 
 **Why this way:** the end-to-end tests prove the pieces work together in a real browser, and their own database means `npm run check` leaves your dev data alone. The live run is the pilot doing its job on all 25 claims.
 
-- [ ] End-to-end tests pass for:
-  - [ ] the queue, with 25 claims and their statuses
-  - [ ] a claim page showing the claim in full
-  - [ ] steps recorded through the API appearing on the claim page without a reload
-  - [ ] a payment over $1,000.00 refused by the API with 403, and the page showing the claim waiting for sign-off with no payment
-  - [ ] a handler signing off in the browser, and the claim becoming Decided and paid
-  - [ ] the instructions page, read only
-- [ ] With `npm run dev` running and a claim decided on the dev database, `npm run e2e` passes and that claim is still decided afterwards
-- [ ] Live: `uv run -m backend.seed`, then `uv run -m agent` works all 25 claims. Afterwards every claim is Decided or Waiting for sign-off with a reason and a section. A short script over the API confirms that no payout over $1,000.00 has been paid without a sign-off, and every approval of $1,000.00 or less has been paid. I'll report how many claims were approved, declined and referred, and re-run any claim the model left unfinished.
-- [ ] In the browser, with the Playwright MCP server, a final walk in light and dark mode: the queue, a claim with each kind of decision, a sign-off and the instructions
-- [ ] `docs/STATUS.md` says what's built and how to run it
-- [ ] `npm run check` passes: ruff, pyright, pytest, Prettier, ESLint, tsc, vitest and Playwright
+- [x] End-to-end tests pass for:
+  - [x] the queue, with 25 claims and their statuses
+  - [x] a claim page showing the claim in full
+  - [x] steps recorded through the API appearing on the claim page without a reload
+  - [x] a payment over $1,000.00 refused by the API with 403, and the page showing the claim waiting for sign-off with no payment
+  - [x] a handler signing off in the browser, and the claim becoming Decided and paid
+  - [x] the instructions page, read only
+- [x] With `npm run dev` running and a claim decided on the dev database, `npm run e2e` passes and that claim is still decided afterwards
+- [x] Live: `uv run -m backend.seed`, then `uv run -m agent` works all 25 claims. Afterwards every claim is Decided or Waiting for sign-off with a reason and a section. A short script over the API confirms that no payout over $1,000.00 has been paid without a sign-off, and every approval of $1,000.00 or less has been paid. I'll report how many claims were approved, declined and referred, and re-run any claim the model left unfinished. (Result: 16 approved, 7 declined and 2 referred. `CLM-1018` was re-run once, because the model wrote its decision as a message instead of calling `decide_claim`.)
+- [x] In the browser, with the Playwright MCP server, a final walk in light and dark mode: the queue, a claim with each kind of decision, a sign-off and the instructions
+- [x] `docs/STATUS.md` says what's built and how to run it
+- [x] `npm run check` passes: ruff, pyright, pytest, Prettier, ESLint, tsc, vitest and Playwright
 
 ## What the live runs cost
 

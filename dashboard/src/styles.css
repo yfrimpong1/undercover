@@ -381,8 +381,8 @@ select {
 }
 
 button {
-  background: var(--midnight);
-  color: #ffffff;
+  background: var(--sea-green);
+  color: var(--midnight);
   font-weight: 600;
   cursor: pointer;
 }
