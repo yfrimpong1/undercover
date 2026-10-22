@@ -48,6 +48,11 @@ def test_get_instructions(client):
     assert client.get("/api/instructions").json() == {"text": text}
 
 
+def test_the_instructions_say_a_claim_is_decided_only_by_decide_claim(client):
+    text = " ".join(client.get("/api/instructions").json()["text"].split())
+    assert "A claim is decided only when you call decide_claim" in text
+
+
 def test_start_claim(client):
     claim = client.post("/api/claims/CLM-1001/start").json()
     assert claim["status"] == "in_progress"
